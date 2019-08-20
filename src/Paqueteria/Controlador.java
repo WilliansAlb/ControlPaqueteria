@@ -37,12 +37,14 @@ public class Controlador {
 
     public void agregarDatosPaquete(String idCreada, String peso1, String destinatario, String remitente) {
         try {
-            PreparedStatement preparado = cn.prepareStatement("INSERT INTO paquete(Id_Paquete,Peso_Paquete,Destinatario,Remitente,PuntoControl) VALUES(?,?,?,?,?)");
+            PreparedStatement preparado = cn.prepareStatement("INSERT INTO paquete(Id_Paquete,Peso_Paquete,Destinatario,Remitente,PuntoControl,Priorizado,Ruta) VALUES(?,?,?,?,?,?,?)");
             preparado.setString(1, idCreada);
             preparado.setString(2, peso1);
             preparado.setString(3, destinatario);
             preparado.setString(4, remitente);
-            preparado.setInt(5, 1);
+            preparado.setInt(5, 3);
+            preparado.setBoolean(6, true);
+            preparado.setInt(7, 1);
             preparado.executeUpdate();
         } catch (SQLException el) {
             System.out.println("Falló la inserción a la base de datos" + el.getMessage());
@@ -108,7 +110,50 @@ public class Controlador {
         }
         return false;
     }
+    public void cambiando(NuevoPaquete nuevoPaquete1){
+        String sql = "SELECT Destino FROM Ruta";
+       
+        Statement st;
+        try{
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next())
+            {
+                String destino1 = rs.getString(1);
+                nuevoPaquete1.getCiudadesText().addItem(destino1);
+            }
+        }
+        catch(SQLException e){
+        
+        }
+    }
 
+    public void buscandoPaquete(ControlarPaquete controlandoPaquete){
+        String codigo = controlandoPaquete.getEntBusquedaPaquete().getText();
+        String sql = "SELECT Ruta,PuntoControl FROM paquete WHERE Id_Paquete ='"+codigo+"'";
+        int ruta1 = 0;
+        Statement st;
+        Statement st2;
+        try{
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next())
+            {
+                controlandoPaquete.setDondeEsta(rs.getInt("PuntoControl"));
+                ruta1 = rs.getInt("Ruta");
+            }
+            st2 = cn.createStatement();
+            ResultSet rs2 = st2.executeQuery("SELECT No_Punto FROM Ruta WHERE Id_Ruta = "+ruta1);
+            while (rs2.next())
+            {
+                controlandoPaquete.setCuantosPuntos(rs2.getInt("No_Punto"));
+            }
+        }
+        catch(SQLException e){
+        
+        }
+        
+    }
     public String getUsuario() {
         return usuario;
     }

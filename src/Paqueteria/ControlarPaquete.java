@@ -9,21 +9,25 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
  * @author willians
  */
 public class ControlarPaquete extends javax.swing.JInternalFrame {
-
+    private int cuantosPuntos;
+    private int dondeEsta;
+    Controlador nuevo;
     /**
      * Creates new form ControlarPaquete
      */
-    public ControlarPaquete() {
+    public ControlarPaquete(Controlador controladorDB) {
         initComponents();
         btnBuscarPaqueteNuevo.setVisible(false);
+        nuevo = controladorDB;
     }
-    public void colocarRecorrido(int cuantos){
+    public void colocarRecorrido(int donde, int cuantos){
         int distancia = (460/2);
         int distancia2 = (distancia/cuantos);
         lblMapa.setVisible(false);
@@ -32,7 +36,7 @@ public class ControlarPaquete extends javax.swing.JInternalFrame {
             JButton boton = new JButton();
             boton.setBounds((distancia2/2)+(distancia2*u*2), 150, distancia2, distancia2);
             boton.setOpaque(false);
-            if (u==2){
+            if (u==(donde-1)){
                 ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("/imagenes/direccion.png"));
                 boton.setIcon(new javax.swing.ImageIcon(icono.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), 0)));
             } else 
@@ -161,8 +165,9 @@ public class ControlarPaquete extends javax.swing.JInternalFrame {
         if (!entBusquedaPaquete.getText().isBlank()){
             entBusquedaPaquete.setEditable(false);
             lblMapa.setVisible(false);
-            int numero = Integer.parseInt(entBusquedaPaquete.getText());
-            colocarRecorrido(numero);
+            //int numero = Integer.parseInt(entBusquedaPaquete.getText());
+            nuevo.buscandoPaquete(this);
+            colocarRecorrido(dondeEsta,cuantosPuntos);
             btnBuscarPaqueteNuevo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "No has puesto el codigo");
@@ -179,6 +184,18 @@ public class ControlarPaquete extends javax.swing.JInternalFrame {
         btnBuscarPaqueteNuevo.setVisible(false);
         entBusquedaPaquete.setEditable(true);
     }//GEN-LAST:event_btnBuscarPaqueteNuevoActionPerformed
+
+    public JTextField getEntBusquedaPaquete() {
+        return entBusquedaPaquete;
+    }
+
+    public void setCuantosPuntos(int cuantosPuntos) {
+        this.cuantosPuntos = cuantosPuntos;
+    }
+
+    public void setDondeEsta(int dondeEsta) {
+        this.dondeEsta = dondeEsta;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

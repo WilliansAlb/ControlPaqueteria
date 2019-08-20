@@ -5,6 +5,7 @@
  */
 package Paqueteria;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +20,8 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
      */
     public NuevoPaquete(Controlador nuevo) {
         initComponents();
-        this.nuevo = nuevo; 
+        this.nuevo = nuevo;
+        cambiarCiudadesText();
     }
 
     /**
@@ -56,7 +58,11 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
         informacion.setFont(new java.awt.Font("Waree", 1, 18)); // NOI18N
         informacion.setText("Ingrese los datos del envio");
 
-        ciudadesText.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ciudadesText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ciudadesTextActionPerformed(evt);
+            }
+        });
 
         ingresoEnvio.setText("Ingresar");
         ingresoEnvio.setOpaque(true);
@@ -158,8 +164,6 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jSlider1.getAccessibleContext().setAccessibleName("");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -176,6 +180,17 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_ingresoEnvioActionPerformed
 
+    private void ciudadesTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciudadesTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ciudadesTextActionPerformed
+
+    public void cambiarCiudadesText(){
+        nuevo.cambiando(this);
+    }
+
+    public JComboBox<String> getCiudadesText() {
+        return ciudadesText;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ciudadesText;

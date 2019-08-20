@@ -22,6 +22,14 @@
                 <Property name="text" type="java.lang.String" value="Control de Rutas"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuControlPuntos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Control de Puntos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuControlPuntosActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="paquetes">
