@@ -34,9 +34,11 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
             modelo.addColumn("COBRO");
             modelo.addColumn("ENCARGADO");
             tablaPuntos.setModel(modelo);
-        } else {
+        } else if (opcion==0) {
             panelUsuarios.setVisible(true);
             panelPuntos.setVisible(false);
+        } else {
+            System.out.print("vamos");
         }
     }
 
@@ -66,10 +68,12 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         visualizarPuntos = new javax.swing.JComboBox<>();
         btn_BuscarPuntos = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        panelRutas = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
 
-        jLabel1.setText("Usuarios");
+        jLabel1.setText("USUARIOS");
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,7 +130,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -141,6 +145,8 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(tablaPuntos);
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("PUNTOS DE CONTROL");
 
         visualizarPuntos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "#Ruta", "Encargado", "NombrePunto", "NombreRuta" }));
@@ -166,18 +172,19 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
             .addGroup(panelPuntosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelPuntosLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(329, 329, 329))
-                    .addComponent(jScrollPane2)
-                    .addGroup(panelPuntosLayout.createSequentialGroup()
-                        .addComponent(txt_BuscarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(btn_BuscarPuntos)))
+                        .addGroup(panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPuntosLayout.createSequentialGroup()
+                                .addComponent(txt_BuscarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_BuscarPuntos)))
+                        .addGap(0, 3, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelPuntosLayout.setVerticalGroup(
@@ -186,18 +193,38 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_BuscarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_BuscarPuntos))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(234, Short.MAX_VALUE))
+        );
+
+        jLabel4.setText("RUTAS");
+
+        javax.swing.GroupLayout panelRutasLayout = new javax.swing.GroupLayout(panelRutas);
+        panelRutas.setLayout(panelRutasLayout);
+        panelRutasLayout.setHorizontalGroup(
+            panelRutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRutasLayout.createSequentialGroup()
+                .addGap(232, 232, 232)
+                .addComponent(jLabel4)
+                .addContainerGap(266, Short.MAX_VALUE))
+        );
+        panelRutasLayout.setVerticalGroup(
+            panelRutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRutasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(470, Short.MAX_VALUE))
         );
 
         jLayeredPane1.setLayer(panelUsuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(panelPuntos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(panelRutas, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -209,6 +236,8 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                     .addContainerGap()
                     .addComponent(panelPuntos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(panelRutas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,6 +247,8 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                     .addContainerGap()
                     .addComponent(panelPuntos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(panelRutas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -396,10 +427,12 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelPuntos;
+    private javax.swing.JPanel panelRutas;
     private javax.swing.JPanel panelUsuarios;
     private javax.swing.JTable tablaPuntos;
     private javax.swing.JTable tablaUsuarios;

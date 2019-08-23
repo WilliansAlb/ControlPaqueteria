@@ -29,7 +29,7 @@ public class Login extends javax.swing.JFrame {
         fondoLogin.setIcon(icono);
         
         ImageIcon foto = new ImageIcon(getClass().getResource("/imagenes/usuario.png"));
-        Icon icono1 = new ImageIcon(foto.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        Icon icono1 = new ImageIcon(foto.getImage().getScaledInstance(lblUser.getWidth(), lblUser.getHeight(), Image.SCALE_DEFAULT));
         lblUser.setIcon(icono1);
         this.repaint();
     }
@@ -56,7 +56,7 @@ public class Login extends javax.swing.JFrame {
         setTitle("Login");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 90, 80));
+        getContentPane().add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 70, 70));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PAQUETERIA");
@@ -89,6 +89,8 @@ public class Login extends javax.swing.JFrame {
                 PantallaPaqueteria nueva = new PantallaPaqueteria(nuevo);
                 nueva.setVisible(true);
                 this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "NOMBRE DE USUARIO NO EXISTE");
             }
         }
     }//GEN-LAST:event_entradaUsuarioActionPerformed
