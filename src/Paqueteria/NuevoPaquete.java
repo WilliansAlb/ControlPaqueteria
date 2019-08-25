@@ -289,7 +289,7 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
 
     public void componentesIniciales(){
         //modelo = new DefaultTableModel();
-        modelo = new ModeloTabla();
+        modelo = new ModeloTabla(1);
         modelo.addColumn("Codigo");
         modelo.addColumn("Ruta");
         modelo.addColumn("Destinatario");

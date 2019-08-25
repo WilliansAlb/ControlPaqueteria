@@ -84,6 +84,11 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
         clientes.add(controlUsuarios);
 
         controlRutas.setText("Control de Rutas");
+        controlRutas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                controlRutasActionPerformed(evt);
+            }
+        });
         clientes.add(controlRutas);
 
         menuControlPuntos.setText("Control de Puntos");
@@ -158,7 +163,7 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
     }//GEN-LAST:event_controlarPaqueteActionPerformed
 
     private void controlUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controlUsuariosActionPerformed
-        ControlAdmin control1 = new ControlAdmin(controladorDB,0);
+        ControlAdmin control1 = new ControlAdmin(controladorDB,0,this);
         this.escritorio.add(control1);
         Dimension desktopSize = escritorio.getSize();
         Dimension FrameSize = control1.getSize();
@@ -176,13 +181,22 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
     }//GEN-LAST:event_entregaPaqueteActionPerformed
 
     private void menuControlPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuControlPuntosActionPerformed
-        ControlAdmin control1 = new ControlAdmin(controladorDB,1);
+        ControlAdmin control1 = new ControlAdmin(controladorDB,1,this);
         this.escritorio.add(control1);
         Dimension desktopSize = escritorio.getSize();
         Dimension FrameSize = control1.getSize();
         control1.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         control1.show();
     }//GEN-LAST:event_menuControlPuntosActionPerformed
+
+    private void controlRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controlRutasActionPerformed
+        ControlAdmin control1 = new ControlAdmin(controladorDB,2,this);
+        this.escritorio.add(control1);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = control1.getSize();
+        control1.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        control1.show();
+    }//GEN-LAST:event_controlRutasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 /**
  *
@@ -51,7 +53,35 @@ public class Controlador {
             System.out.println("Falló la inserción a la base de datos" + el.getMessage());
 
         }
-
+    }
+   
+    public void agregarUsuario(String user, String pass, String nombre, String puesto){
+        try {
+            PreparedStatement preparado = cn.prepareStatement("INSERT INTO Usuarios(user,pass,puesto,nombre) VALUES(?,?,?,?)");
+            preparado.setString(1, user);
+            preparado.setString(2, pass);
+            preparado.setString(3, puesto);
+            preparado.setString(4, nombre);
+            preparado.executeUpdate();
+        } catch (SQLException el) {
+            System.out.println("Falló la inserción a la base de datos" + el.getMessage());
+        }
+    }
+    
+    public void agregarRuta(int no_puntos, String destino, int cuota_destino, int cuota_priori, int tarifa_peso,boolean estado_ruta, int tarifa_global){
+        try {
+            PreparedStatement preparado = cn.prepareStatement("INSERT INTO Ruta(no_puntos,destino,cuota_destino,cuota_priori,tarifa_peso,estado_ruta,tarifa_global) VALUES(?,?,?,?,?,?,?)");
+            preparado.setInt(1, no_puntos);
+            preparado.setString(2, destino);
+            preparado.setInt(3,cuota_destino);
+            preparado.setInt(4,cuota_priori);
+            preparado.setInt(5,tarifa_peso);
+            preparado.setBoolean(6, true);
+            preparado.setInt(7, tarifa_global);
+            preparado.executeUpdate();
+        } catch (SQLException el) {
+            System.out.println("Falló la inserción a la base de datos" + el.getMessage());
+        }
     }
 
     public void crearIDPaquete(String destinatario, String remitente, String destino1, int peso) {
@@ -97,6 +127,7 @@ public class Controlador {
             crearIDPaquete(destinatario, remitente, destino1, peso);
         }
     }
+    
     public String crearIdPaquete(String destino1){
     String idPos = "ABCDEFGHIJKLMNOPQRSTUWXYZ1234567890";
         String idCreada = "";
@@ -139,6 +170,7 @@ public class Controlador {
         }
         return null;
     }
+    
     public boolean identificar(String busqueda, String contra) {
         try {
             PreparedStatement preparada2 = cn.prepareStatement("SELECT pass, puesto FROM Usuarios WHERE user = ?");
@@ -161,6 +193,16 @@ public class Controlador {
         }
         return false;
     }
+    
+    public void eliminando(String sql){
+        try {
+            PreparedStatement preparado = cn.prepareStatement(sql);
+            preparado.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void cambiando(NuevoPaquete nuevoPaquete1){
         String sql = "SELECT Destino FROM Ruta";
        
@@ -177,6 +219,69 @@ public class Controlador {
         catch(SQLException e){
         
         }
+    }
+    public void cambiandoDestino(ControlAdmin admin){
+        String sql = "SELECT Destino FROM Ruta";
+       
+        Statement st;
+        try{
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next())
+            {
+                String destino1 = rs.getString(1);
+                admin.getCombo_Destinos().addItem(destino1);
+            }
+        }
+        catch(SQLException e){
+        
+        }
+    }
+    
+    public int ruta(String destino){
+        String sql = "SELECT codigo_ruta FROM Ruta WHERE destino = '"+destino+"'";
+        int numero = 0; 
+        Statement st;
+        try{
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next())
+            {
+                numero = rs.getInt("codigo_ruta");
+            }
+        }
+        catch(SQLException e){
+        
+        }
+        return numero;
+    }
+    public boolean verificarLimite(int i, ControlAdmin adm){
+        String sql = "SELECT no_puntos FROM Ruta WHERE codigo_ruta = "+i;
+        Statement st;
+        Statement st2;
+        int limite = 0;
+        int existen = 0;
+        try{
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next())
+            {
+                limite = rs.getInt("no_puntos");
+                
+            }
+            st2 = cn.createStatement();
+            ResultSet rs2 = st2.executeQuery("SELECT COUNT(*) AS TOTAL FROM Puntos WHERE id_ruta = "+i);
+            while (rs2.next())
+            {
+                existen = Integer.parseInt(rs2.getString("TOTAL"));
+            }
+            adm.setLimiteRuta(limite);
+            return existen<=limite;
+        }
+        catch(SQLException e){
+            System.out.print(e.getMessage());
+        }
+        return false;
     }
 
     public void buscandoPaquete(ControlarPaquete controlandoPaquete){
@@ -203,8 +308,24 @@ public class Controlador {
         catch(SQLException e){
         
         }
-        
     }
+    
+    public boolean existe_Usuario(String user){
+        try {
+            PreparedStatement preparada2 = cn.prepareStatement("SELECT nombre FROM Usuarios WHERE user = ?");
+            preparada2.setString(1, user);
+            ResultSet resultado = preparada2.executeQuery();
+            if (!resultado.next()) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Ese user le pertenece a "+ resultado.getString("nombre"));
+                return false;
+            }
+        }catch (SQLException es){
+            return false;
+        }
+    }
+    
     public String getUsuario() {
         return usuario;
     }
@@ -220,5 +341,4 @@ public class Controlador {
     public void setPuesto(String puesto) {
         this.puesto = puesto;
     }
-    
 }
