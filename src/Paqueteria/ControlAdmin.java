@@ -22,17 +22,16 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     private int ruta5 = 0;
     private int limiteRuta = 0;
+    private String sql2 = "";
     /**
      * Creates new form ControlAdmin
      */
-    public ControlAdmin(Controlador cn1, int opcion) {
+    /**public ControlAdmin(Controlador cn1, int opcion) {
         initComponents();
         this.cn1 = cn1;
         this.opcion = opcion;
         volverInvisiblesPaneles();
         if (opcion==1){
-            panelPuntos.setVisible(true);
-
             modelo.addColumn("RUTA");
             modelo.addColumn("#PUNTO");
             modelo.addColumn("NOMBRE");
@@ -44,11 +43,10 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         } else if (opcion==2) {
             panelNuevaRuta.setVisible(true);
         }
-    }
+    }*/
     
     public void volverInvisiblesPaneles(){
         panelUsuarios2.setVisible(false);
-        panelPuntos.setVisible(false);
         panelPuntos2.setVisible(false);
         panelRutas.setVisible(false);
         panelNuevaRuta.setVisible(false);
@@ -57,6 +55,9 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     public void mostrarDestinos(){
         pantalla.controladorDB.cambiandoDestino(this);
     }
+    public void mostrarEncargados(){
+        pantalla.controladorDB.cambiandoEncargados(this);
+    }
     public ControlAdmin(Controlador cn1, int opcion, PantallaPaqueteria pantalla) {
         initComponents();
         this.cn1 = cn1;
@@ -64,17 +65,18 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         volverInvisiblesPaneles();
         this.pantalla = pantalla;
         if (opcion == 1) {
-            
+
             panelPuntos2.setVisible(true);
-            modelo = new DefaultTableModel();
-            modelo.addColumn("# RUTA");
+            modelo.addColumn("RUTA");
             modelo.addColumn("DESTINO");
+            modelo.addColumn("LUGAR");
             modelo.addColumn("# PAQUETES");
             modelo.addColumn("# PUNTO");
             modelo.addColumn("TARIFA LOCAL");
             modelo.addColumn("ENCARGADO");
             tablaPuntos1.setModel(modelo);
             mostrarDestinos();
+            mostrarEncargados();
         } else if (opcion == 0) {
             panelUsuarios2.setVisible(true);
             mostrarTablaUsuarios();
@@ -94,14 +96,6 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         panelSobrepuesto1 = new javax.swing.JLayeredPane();
-        panelPuntos = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaPuntos = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        txt_BuscarPunto = new javax.swing.JTextField();
-        visualizarPuntos = new javax.swing.JComboBox<>();
-        btn_BuscarPuntos = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         panelRutas = new javax.swing.JPanel();
         tabbedRutas = new javax.swing.JTabbedPane();
         panelNuevaRuta = new javax.swing.JPanel();
@@ -193,79 +187,33 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         jLabel34 = new javax.swing.JLabel();
         entTarifaLocal = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        combo_Encargados = new javax.swing.JComboBox<>();
         btn_NuevoPunto = new javax.swing.JButton();
         panelModPunto = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPuntos = new javax.swing.JTable();
+        visualizarPuntos = new javax.swing.JComboBox<>();
+        btn_BuscarPuntos = new javax.swing.JButton();
+        txt_BuscarPunto = new javax.swing.JTextField();
+        btn_SeleccionarPunto = new javax.swing.JButton();
+        btn_Eliminar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lbl_Ruta = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        lbl_Destino = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        entModLugarPunto = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        entModNoPaquetes = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        entModTarifaLocal = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        combo_Encargados2 = new javax.swing.JComboBox<>();
+        btn_GuardarPuntos = new javax.swing.JButton();
 
         setClosable(true);
-
-        tablaPuntos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(tablaPuntos);
-
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("PUNTOS DE CONTROL");
-
-        visualizarPuntos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "#Ruta", "Encargado", "NombrePunto", "NombreRuta" }));
-        visualizarPuntos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                visualizarPuntosActionPerformed(evt);
-            }
-        });
-
-        btn_BuscarPuntos.setText("BUSCAR");
-        btn_BuscarPuntos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_BuscarPuntosActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("BUSQUEDA POR:");
-
-        javax.swing.GroupLayout panelPuntosLayout = new javax.swing.GroupLayout(panelPuntos);
-        panelPuntos.setLayout(panelPuntosLayout);
-        panelPuntosLayout.setHorizontalGroup(
-            panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPuntosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelPuntosLayout.createSequentialGroup()
-                        .addGroup(panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPuntosLayout.createSequentialGroup()
-                                .addComponent(txt_BuscarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_BuscarPuntos)))
-                        .addGap(0, 4, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelPuntosLayout.setVerticalGroup(
-            panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPuntosLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPuntosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_BuscarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_BuscarPuntos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
-        );
 
         jLabel4.setFont(new java.awt.Font("TlwgTypewriter", 1, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -801,6 +749,8 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
 
         jLabel32.setText("Nombre del lugar:");
 
+        combo_Destinos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NINGUNO" }));
+
         tablaPuntos1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -811,7 +761,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaPuntos1);
 
-        btn_VerRuta.setText("VER RUTA");
+        btn_VerRuta.setText("SELECCIONAR");
         btn_VerRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_VerRutaActionPerformed(evt);
@@ -826,7 +776,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
 
         jLabel35.setText("Encargado:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NADIE" }));
+        combo_Encargados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NADIE" }));
 
         btn_NuevoPunto.setText("CREAR");
         btn_NuevoPunto.addActionListener(new java.awt.event.ActionListener() {
@@ -859,7 +809,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelNuevoPuntoLayout.createSequentialGroup()
                                 .addComponent(jLabel35)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(combo_Encargados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelNuevoPuntoLayout.createSequentialGroup()
                                 .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -890,7 +840,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                     .addComponent(combo_Destinos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_VerRuta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelNuevoPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(entLugarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -906,22 +856,178 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelNuevoPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel35)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combo_Encargados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_NuevoPunto))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabbedPuntos.addTab("Nuevo Punto", panelNuevoPunto);
+
+        jLabel36.setFont(new java.awt.Font("TlwgTypewriter", 1, 18)); // NOI18N
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("MODIFICAR PUNTO");
+
+        jLabel3.setText("BUSQUEDA POR:");
+
+        tablaPuntos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tablaPuntos);
+
+        visualizarPuntos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "#Ruta", "Encargado", "NombrePunto", "NombreRuta" }));
+        visualizarPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visualizarPuntosActionPerformed(evt);
+            }
+        });
+
+        btn_BuscarPuntos.setText("BUSCAR");
+        btn_BuscarPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_BuscarPuntosActionPerformed(evt);
+            }
+        });
+
+        btn_SeleccionarPunto.setText("SELECCIONAR PUNTO");
+        btn_SeleccionarPunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SeleccionarPuntoActionPerformed(evt);
+            }
+        });
+
+        btn_Eliminar.setText("ELIMINAR");
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("ID RUTA:");
+
+        lbl_Ruta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_Ruta.setBorder(new javax.swing.border.MatteBorder(null));
+        lbl_Ruta.setOpaque(true);
+
+        jLabel38.setText("DESTINO:");
+
+        lbl_Destino.setBorder(new javax.swing.border.MatteBorder(null));
+        lbl_Destino.setOpaque(true);
+
+        jLabel40.setText("LUGAR PUNTO:");
+
+        jLabel41.setText("NUMERO PAQUETES:");
+
+        jLabel42.setText("TARIFA:");
+
+        jLabel43.setText("ENCARGADO PUNTO DE CONTROL:");
+
+        combo_Encargados2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NADIE" }));
+
+        btn_GuardarPuntos.setText("GUARDAR CAMBIOS");
+        btn_GuardarPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GuardarPuntosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelModPuntoLayout = new javax.swing.GroupLayout(panelModPunto);
         panelModPunto.setLayout(panelModPuntoLayout);
         panelModPuntoLayout.setHorizontalGroup(
             panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+            .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelModPuntoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModPuntoLayout.createSequentialGroup()
+                        .addComponent(txt_BuscarPunto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_BuscarPuntos))
+                    .addGroup(panelModPuntoLayout.createSequentialGroup()
+                        .addComponent(btn_SeleccionarPunto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Eliminar))
+                    .addGroup(panelModPuntoLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_Ruta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel38)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_Destino, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelModPuntoLayout.createSequentialGroup()
+                        .addComponent(jLabel40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(entModLugarPunto))
+                    .addGroup(panelModPuntoLayout.createSequentialGroup()
+                        .addComponent(jLabel41)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(entModNoPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel42)
+                        .addGap(18, 18, 18)
+                        .addComponent(entModTarifaLocal))
+                    .addGroup(panelModPuntoLayout.createSequentialGroup()
+                        .addComponent(jLabel43)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(combo_Encargados2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(panelModPuntoLayout.createSequentialGroup()
+                .addGap(176, 176, 176)
+                .addComponent(btn_GuardarPuntos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelModPuntoLayout.setVerticalGroup(
             panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGroup(panelModPuntoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_BuscarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(visualizarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_BuscarPuntos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_SeleccionarPunto)
+                    .addComponent(btn_Eliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_Ruta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel38)
+                        .addComponent(lbl_Destino, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(entModLugarPunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(entModNoPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel42)
+                    .addComponent(entModTarifaLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelModPuntoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(combo_Encargados2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(btn_GuardarPuntos)
+                .addContainerGap())
         );
 
         tabbedPuntos.addTab("Modificar Punto", panelModPunto);
@@ -937,7 +1043,6 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
             .addComponent(tabbedPuntos)
         );
 
-        panelSobrepuesto1.setLayer(panelPuntos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         panelSobrepuesto1.setLayer(panelRutas, javax.swing.JLayeredPane.DEFAULT_LAYER);
         panelSobrepuesto1.setLayer(panelUsuarios2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         panelSobrepuesto1.setLayer(panelPuntos2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -946,12 +1051,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         panelSobrepuesto1.setLayout(panelSobrepuesto1Layout);
         panelSobrepuesto1Layout.setHorizontalGroup(
             panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 544, Short.MAX_VALUE)
-            .addGroup(panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelSobrepuesto1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelPuntos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGap(0, 562, Short.MAX_VALUE)
             .addGroup(panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panelRutas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -961,12 +1061,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         );
         panelSobrepuesto1Layout.setVerticalGroup(
             panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 528, Short.MAX_VALUE)
-            .addGroup(panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelSobrepuesto1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelPuntos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGap(0, 531, Short.MAX_VALUE)
             .addGroup(panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panelRutas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelSobrepuesto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -996,7 +1091,7 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private void btn_BuscarPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarPuntosActionPerformed
         if (visualizarPuntos.getSelectedIndex()==0)
         {
-            mostrarTablaPuntos();
+            mostrarTablaPuntos("SELECT * FROM Puntos");
         }
         String verificador = txt_BuscarPunto.getText();
         if (!txt_BuscarPunto.getText().isBlank() && visualizarPuntos.getSelectedIndex() != 0) {
@@ -1223,14 +1318,22 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         String puntoPaquete = entPuntoNumero.getText();
         String tarifa = entTarifaLocal.getText();
         if (pantalla.controladorDB.verificarLimite(getRuta5(),this)){
-            if (lugar.isBlank() && noPaquete.isBlank() && puntoPaquete.isBlank() && tarifa.isBlank())
+            if (!lugar.isBlank() && !noPaquete.isBlank() && !puntoPaquete.isBlank() && !tarifa.isBlank())
             {
                 if (esNumero(noPaquete) && esNumero(puntoPaquete) && esNumero(tarifa)){
                     int noPaq = Integer.parseInt(noPaquete);
                     int puntoPaquete1 = Integer.parseInt(puntoPaquete);
                     int tarifa1 = Integer.parseInt(tarifa);
-                    if (puntoPaquete1<getLimiteRuta()){
-                    
+                    if (puntoPaquete1<getLimiteRuta() && puntoPaquete1>0 && !combo_Destinos.getSelectedItem().toString().equals("NINGUNO")){
+                        pantalla.controladorDB.acomodando(puntoPaquete1, getRuta5());
+                        if (combo_Encargados.getSelectedItem().toString().equals("NADIE")){
+                            pantalla.controladorDB.agregarPunto(getRuta5(),pantalla.controladorDB.lugarPunto(lugar),noPaq,puntoPaquete1,tarifa1,"");
+                        } else {
+                            pantalla.controladorDB.agregarPunto(getRuta5(),pantalla.controladorDB.lugarPunto(lugar),noPaq,puntoPaquete1,tarifa1,combo_Encargados.getSelectedItem().toString());
+                        }
+                        mostrarTablaPuntos1(getRuta5());
+                    }else {
+                        JOptionPane.showMessageDialog(null,"No has seleccionado la ruta");
                     }
                 }
             } else {
@@ -1240,6 +1343,84 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,"El numero de puntos llegó a su maximo");
         }
     }//GEN-LAST:event_btn_NuevoPuntoActionPerformed
+
+    private void btn_SeleccionarPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SeleccionarPuntoActionPerformed
+        int donde = tablaPuntos.getSelectedRow();
+        int ruta1 = Integer.parseInt(modelo.getValueAt(donde, 0).toString());
+        String destino1 = modelo.getValueAt(donde, 1).toString();
+        String lugar = modelo.getValueAt(donde, 2).toString();
+        String noPack = modelo.getValueAt(donde, 3).toString();
+        String tarifa = modelo.getValueAt(donde, 5).toString();
+        String encargado = "";
+       
+        try {
+            encargado = modelo.getValueAt(donde,6).toString();
+        }catch (Exception e){
+            encargado = "NADIE";
+        }
+        
+        lbl_Ruta.setText(""+ruta1);
+        lbl_Destino.setText(destino1);
+        entModLugarPunto.setText(lugar);
+        entModNoPaquetes.setText(noPack);
+        entModTarifaLocal.setText(tarifa);
+        
+        combo_Encargados2.setSelectedItem(encargado);
+    }//GEN-LAST:event_btn_SeleccionarPuntoActionPerformed
+
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
+        int donde = tablaPuntos.getSelectedRow();
+        int ruta1 = Integer.parseInt(modelo.getValueAt(donde, 0).toString());
+        if (!pantalla.controladorDB.estaVacio(ruta1)){
+            String lugar = modelo.getValueAt(donde, 2).toString();
+            String[] opciones = {"Sí", "No"};
+            int x = JOptionPane.showOptionDialog(null, "¿Estás seguro?",
+                    "Eliminar punto",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
+            if (x == 0) {
+                pantalla.controladorDB.eliminando("DELETE FROM Puntos WHERE id_punto = '" + lugar + "'");
+                mostrarTablaPuntos(getSql2());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Hay paquetes en ruta");
+        }
+        
+    }//GEN-LAST:event_btn_EliminarActionPerformed
+
+    private void btn_GuardarPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarPuntosActionPerformed
+        boolean actividadRuta;
+        int donde = tablaPuntos.getSelectedRow();
+        
+        if (combo_Encargados2.getSelectedItem().toString().equals("NADIE")){
+            actividadRuta = true;
+        } else {
+            actividadRuta = false;
+        }
+        if (!entModLugarPunto.getText().isBlank() && !entModNoPaquetes.getText().isBlank() && !entModTarifaLocal.getText().isBlank()) {
+            if (esNumero(entModNoPaquetes.getText()) && esNumero(entModTarifaLocal.getText())) {
+                String[] opciones = {"Sí", "No"};
+                int x = JOptionPane.showOptionDialog(null, "¿Están correctos tus datos?",
+                        "Modificación del punto",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
+                if (x == 0) {
+                    if (actividadRuta){
+                        pantalla.controladorDB.eliminando("UPDATE Puntos SET "
+                + "id_punto = '" + entModLugarPunto.getText()+ "',"
+                + "no_paquetes = " + Integer.parseInt(entModNoPaquetes.getText())+ ", "
+                + "tarifa = " + Integer.parseInt(entModTarifaLocal.getText())+ ","
+                + "encargado = "+null+ " WHERE id_ruta = "+Integer.parseInt(lbl_Ruta.getText())+" AND no_punto = "+Integer.parseInt(modelo.getValueAt(donde, 4).toString()));
+                    } else {
+                    pantalla.controladorDB.eliminando("UPDATE Puntos SET "
+                + "id_punto = '" + entModLugarPunto.getText()+ "',"
+                + "no_paquetes = " + Integer.parseInt(entModNoPaquetes.getText())+ ", "
+                + "tarifa = " + Integer.parseInt(entModTarifaLocal.getText())+ ","
+                + "encargado = '"+combo_Encargados2.getSelectedItem().toString()+ "' WHERE id_ruta = "+Integer.parseInt(lbl_Ruta.getText())+" AND no_punto = "+Integer.parseInt(modelo.getValueAt(donde, 4).toString())); 
+                    }
+                mostrarTablaPuntos(getSql2());
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_GuardarPuntosActionPerformed
 
     public boolean esNumero(String numero){
         String numeros = "0123456789";
@@ -1263,40 +1444,10 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         entModificacionNombre.setText("");
     }
     
-    public void mostrarTablaPuntos() {
-        modelo = null;
-        modelo = new DefaultTableModel();
-        modelo.addColumn("RUTA");
-        modelo.addColumn("#PUNTO");
-        modelo.addColumn("NOMBRE");
-        modelo.addColumn("COBRO");
-        modelo.addColumn("ENCARGADO");
-        tablaPuntos.setModel(modelo);
-        String sql = "SELECT * FROM Puntos";
-
-        String datos[] = new String[5];
-        Statement st;
-        try {
-            st = cn1.cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                datos[0] = rs.getString(1);
-                datos[1] = rs.getString(2);
-                datos[2] = rs.getString(3);
-                datos[3] = rs.getString(4);
-                datos[4] = rs.getString(5);
-                modelo.addRow(datos);
-            }
-            tablaPuntos.setModel(modelo);
-        } catch (SQLException e) {
-
-        }
-    }
-    
     public void mostrarTablaPuntos1(int ruta2) {
         modelo = null;
         modelo = new DefaultTableModel();
-        modelo.addColumn("# RUTA");
+        modelo.addColumn("RUTA");
         modelo.addColumn("DESTINO");
         modelo.addColumn("LUGAR");
         modelo.addColumn("# PAQUETES");
@@ -1362,30 +1513,39 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         modelo = null;
         modelo = new DefaultTableModel();
         modelo.addColumn("RUTA");
-        modelo.addColumn("#PUNTO");
-        modelo.addColumn("NOMBRE");
-        modelo.addColumn("COBRO");
+        modelo.addColumn("DESTINO");
+        modelo.addColumn("LUGAR");
+        modelo.addColumn("# PAQUETES");
+        modelo.addColumn("# PUNTO");
+        modelo.addColumn("TARIFA LOCAL");
         modelo.addColumn("ENCARGADO");
         tablaPuntos.setModel(modelo);
         
-        String datos[] = new String[5];
+        Object datos[] = new Object[7];
         Statement st;
-        try{
+        Statement st2;
+        try {
             st = cn1.cn.createStatement();
+            st2 = cn1.cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while (rs.next())
-            {
-                datos[0] = rs.getString(1);
-                datos[1] = rs.getString(2);
-                datos[2] = rs.getString(3);
-                datos[3] = rs.getString(4);
-                datos[4] = rs.getString(5);
+            setSql2(sql);
+            while (rs.next()) {
+                datos[0] = rs.getInt("id_ruta");
+                ResultSet rs2 = st2.executeQuery("SELECT destino FROM Ruta WHERE codigo_ruta = "+datos[0]);
+                while (rs2.next()){
+                    datos[1] = rs2.getString("destino");
+                }
+                datos[2] = rs.getString("id_punto");
+                datos[3] = rs.getInt("no_paquetes");
+                datos[4] = rs.getInt("no_punto");
+                datos[5] = rs.getInt("tarifa");
+                datos[6] = rs.getString("encargado");
                 modelo.addRow(datos);
+                System.out.print("uno");
             }
             tablaPuntos.setModel(modelo);
-        }
-        catch(SQLException e){
-        
+        } catch (SQLException e) {
+            System.out.print("problema"+e.getMessage());
         }
     }
    
@@ -1430,6 +1590,14 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
         return combo_Destinos;
     }
 
+    public JComboBox<String> getCombo_Encargados() {
+        return combo_Encargados;
+    }
+
+    public JComboBox<String> getCombo_Encargados2() {
+        return combo_Encargados2;
+    }
+    
     public int getRuta5() {
         return ruta5;
     }
@@ -1445,25 +1613,37 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     public void setLimiteRuta(int limiteRuta) {
         this.limiteRuta = limiteRuta;
     }
-    
-    
 
+    public String getSql2() {
+        return sql2;
+    }
+
+    public void setSql2(String sql2) {
+        this.sql2 = sql2;
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Agregar;
     private javax.swing.JButton btn_BuscarPuntos;
+    private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_EliminarUser;
     private javax.swing.JButton btn_GuardarDatos;
     private javax.swing.JButton btn_GuardarMod;
+    private javax.swing.JButton btn_GuardarPuntos;
     private javax.swing.JButton btn_ModificacionTarifas;
     private javax.swing.JButton btn_ModificarContra;
     private javax.swing.JButton btn_NuevaRuta;
     private javax.swing.JButton btn_NuevoPunto;
+    private javax.swing.JButton btn_SeleccionarPunto;
     private javax.swing.JButton btn_VerRuta;
     private javax.swing.JButton btn_Visualizar;
     private javax.swing.JButton btn_VisualizarRuta;
     private javax.swing.JComboBox<String> comboModificacionPuesto;
     private javax.swing.JComboBox<String> comboPuesto;
     private javax.swing.JComboBox<String> combo_Destinos;
+    private javax.swing.JComboBox<String> combo_Encargados;
+    private javax.swing.JComboBox<String> combo_Encargados2;
     private javax.swing.JComboBox<String> combo_EstadoRuta;
     private javax.swing.JTextField entCuotaDestino;
     private javax.swing.JTextField entDestino;
@@ -1471,7 +1651,10 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private javax.swing.JTextField entModCuotaDestino;
     private javax.swing.JTextField entModDestino;
     private javax.swing.JTextField entModGlobal;
+    private javax.swing.JTextField entModLugarPunto;
+    private javax.swing.JTextField entModNoPaquetes;
     private javax.swing.JTextField entModNoPuntos;
+    private javax.swing.JTextField entModTarifaLocal;
     private javax.swing.JTextField entModTarifaPeso;
     private javax.swing.JTextField entModTarifaPriori;
     private javax.swing.JTextField entModificacionNombre;
@@ -1486,7 +1669,6 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private javax.swing.JTextField entTarifaPrioridad;
     private javax.swing.JTextField entUser;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1516,7 +1698,13 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1528,13 +1716,14 @@ public class ControlAdmin extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel lbl_Destino;
+    private javax.swing.JLabel lbl_Ruta;
     private javax.swing.JPanel panelModPunto;
     private javax.swing.JPanel panelModificarRuta;
     private javax.swing.JPanel panelModificarUsuario;
     private javax.swing.JPanel panelNuevaRuta;
     private javax.swing.JPanel panelNuevoPunto;
     private javax.swing.JPanel panelNuevoUsuario;
-    private javax.swing.JPanel panelPuntos;
     private javax.swing.JPanel panelPuntos2;
     private javax.swing.JPanel panelRutas;
     private javax.swing.JLayeredPane panelSobrepuesto1;

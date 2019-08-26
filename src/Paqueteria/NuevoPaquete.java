@@ -17,6 +17,8 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
     Controlador nuevo;
     boolean priorizado = false;
     DefaultTableModel modelo;
+    int tarifaGlob = 0;
+    int[] costos1;
     /**
      * Creates new form NuevoPaquete
      * @param nuevo
@@ -136,6 +138,11 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
         });
 
         btn_Generar.setText("Generar Factura");
+        btn_Generar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GenerarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,14 +234,26 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
 
     private void ingresoEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoEnvioActionPerformed
         if (!entDestinatario.getText().isBlank() && !entRemitente.getText().isBlank()) {
-            
+            int costos[] = nuevo.costos(nuevo.ruta(ciudadesText.getSelectedItem().toString()));
+            int cuotaDestino = costos[0];
+            int peso = slider_Peso.getValue();
+            int tarifaPeso = costos[2];
+            tarifaGlob = costos[3];
+            costos1 = costos;
+            int total = 0;
+            if (priorizado){
+                total = cuotaDestino + (peso*tarifaPeso) + costos[1];
+            } else {
+                total = cuotaDestino + (peso*tarifaPeso);
+            }
+            String mensaje = "<html><body>El costo de tu paquete es Q"+total+".00<br>(Cuota Destino + (Tarifa por peso * Peso) + Cuota Priorización)</body></html>";
             String[] opciones = {"Confirmar","Cancelar"};
-            int x = JOptionPane.showOptionDialog(null, "El costo de tu paquete es [cuota_Destino]+[cuota_Peso*peso]",
+            int x = JOptionPane.showOptionDialog(null, mensaje,
                 "Confirmar ingreso de paquete",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
             if (x==0){
                 //nuevo.crearIDPaquete(entDestinatario.getText(), entRemitente.getText(), ciudadesText.getSelectedItem().toString(), jSlider1.getValue());
-                actualizarTabla();
+                actualizarTabla(total);
                 entDestinatario.setText("");
                 entRemitente.setText("");
             }
@@ -266,14 +285,36 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
         System.out.print(modelo.getRowCount());
     }//GEN-LAST:event_btn_CancelarActionPerformed
 
-    public void actualizarTabla(){
+    private void btn_GenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GenerarActionPerformed
+        FrameVario nuevo1 = new FrameVario(this);
+        nuevo1.setVisible(true);
+    }//GEN-LAST:event_btn_GenerarActionPerformed
+
+    public void limpiarTodo(){
+        entDestinatario.setText("");
+        entRemitente.setText("");
+        slider_Peso.setValue(1);
+        modelo = null;
+        modelo = new ModeloTabla(1);
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Ruta");
+        modelo.addColumn("Destinatario");
+        modelo.addColumn("Remitente");
+        modelo.addColumn("Peso");
+        modelo.addColumn("Costo total");
+        modelo.addColumn("Priorizado");
+        tablaPaqueteNew.setModel(modelo);
+        btn_Priorizado.setText("No");
+        priorizado = false;
+    }
+    public void actualizarTabla(int costo){
         Object datos[] = new Object[7];
         datos[0] = nuevo.crearIdPaquete(ciudadesText.getSelectedItem().toString());
         datos[1] = ciudadesText.getSelectedItem().toString();
         datos[2] = entDestinatario.getText();
         datos[3] = entRemitente.getText();
         datos[4] = slider_Peso.getValue(); 
-        datos[5] = 10; //acá debo de ver como meter la tarifa de destino y la del peso
+        datos[5] = costo; //acá debo de ver como meter la tarifa de destino y la del peso
         if (priorizado){
             datos[6] = "Sí";
         } else {
@@ -305,6 +346,22 @@ public class NuevoPaquete extends javax.swing.JInternalFrame {
         return ciudadesText;
     }
 
+    public Controlador getNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(Controlador nuevo) {
+        this.nuevo = nuevo;
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Cancelar;
     private javax.swing.JButton btn_Generar;
