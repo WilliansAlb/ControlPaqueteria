@@ -28,11 +28,9 @@ public class Controlador {
         
         String user = "root";
         String password = "[Cristeptesico_65]";
-        String url = "jdbc:mysql://localhost:3306/prueba1";
+        String url = "jdbc:mysql://localhost:3306/Paqueteria";
         try {
             cn = DriverManager.getConnection(url, user, password);
-            //declaracion = cn.createStatement();
-            //resultado = declaracion.executeQuery("SELECT * FROM Cliente");
         } catch (SQLException e) {
             System.out.println("Falló la conexión a la base de datos");
         }
@@ -376,7 +374,64 @@ public class Controlador {
         return hay;
     }
     public void agregarAGanancias(String codigo, int ruta, int costoInicio, String fecha){
-    
+        try {
+            PreparedStatement preparado = cn.prepareStatement("INSERT INTO Ganancias("
+                    + "cod_paquete,"
+                    + "no_ruta,"
+                    + "costo_inicial,"
+                    + "costo_final,"
+                    + "fecha_inicio,"
+                    + "ganancia) VALUES(?,?,?,?,?,?)");
+            preparado.setString(1, codigo);
+            preparado.setInt(2, ruta);
+            preparado.setInt(3, costoInicio);
+            preparado.setInt(4, 0);
+            preparado.setDate(5,null);
+            preparado.setInt(6, 0);
+            preparado.executeUpdate();
+        } catch (SQLException el) {
+            System.out.println("Falló la inserción a la base de datos" + el.getMessage());
+        }
+    }
+    public String[] ganancias1(String codigo_ruta){
+        String sql2 = "SELECT costo_inicial, costo_final, ganancia FROM Ganancias WHERE cod_paquete = '" + codigo_ruta + "'";
+        String[] ganando = new String[3];
+        Statement st;
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql2);
+            while (rs.next()) {
+                int no_puntos = rs.getInt("costo_inicial");
+                int cuota_destino = rs.getInt("costo_final");
+                int cuota_priori = rs.getInt("ganancia");
+                ganando[0] = ""+no_puntos;
+                ganando[1] = ""+cuota_destino;
+                ganando[2] = ""+cuota_priori;
+            }
+            return ganando;
+        } catch (SQLException e) {
+            System.out.print("problema" + e.getMessage());
+        }
+        return null;
+    }
+    public String[] datosCliente(String nit){
+        String sql2 = "SELECT nombre, ciudad FROM Clientes WHERE nit_1 = '" + nit + "'";
+        String[] ganando = new String[2];
+        Statement st;
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql2);
+            while (rs.next()) {
+                
+                ganando[0] = rs.getString("nombre");
+                ganando[1] = rs.getString("ciudad");
+ 
+                return ganando;
+            }
+        } catch (SQLException e) {
+            System.out.print("problema" + e.getMessage());
+        }
+        return null;
     }
     public String crearIdPaquete(String destino1){
     String idPos = "ABCDEFGHIJKLMNOPQRSTUWXYZ1234567890";
@@ -426,7 +481,6 @@ public class Controlador {
             PreparedStatement preparada2 = cn.prepareStatement("SELECT pass, puesto FROM Usuarios WHERE user = ?");
             preparada2.setString(1, busqueda);
             ResultSet resultado = preparada2.executeQuery();
-            System.out.print("entra acá");
             if (resultado.next()) {
                 String contra_Hallada = resultado.getString("pass");
                 if (contra_Hallada.equals(contra)) {
@@ -451,6 +505,24 @@ public class Controlador {
         } catch (SQLException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public int paquetesEnRuta(int ruta,boolean estado) {
+        String sql3 = "SELECT COUNT(*) AS TOTAL FROM Paquetes WHERE estado = "+estado+" AND ruta = "+ruta;
+        int hay = 0;
+        try {
+            Statement st2;
+            st2 = cn.createStatement();
+            //ResultSet rs2 = st2.executeQuery("SELECT COUNT(*) AS TOTAL FROM Paquetes WHERE ruta = "+ ruta);
+            ResultSet rs2 = st2.executeQuery(sql3);
+            while (rs2.next()) {
+                hay = Integer.parseInt(rs2.getString("TOTAL"));
+                return hay;
+            }
+        } catch (SQLException e) {
+            System.out.print("problema" + e.getMessage());
+        }
+        return 0;
     }
     public boolean estaVacio(int ruta){
         int hay = 0;

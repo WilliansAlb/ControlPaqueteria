@@ -47,6 +47,9 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         escritorio = new javax.swing.JDesktopPane();
         fondoLabel = new javax.swing.JLabel();
         menuBarPaquetería = new javax.swing.JMenuBar();
@@ -61,6 +64,15 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
         rutas = new javax.swing.JMenu();
         nuevaRuta = new javax.swing.JMenuItem();
         modificacionRutas = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        menuReporte1 = new javax.swing.JMenuItem();
+        menuReporte2 = new javax.swing.JMenuItem();
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Paquetería");
@@ -139,6 +151,26 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
 
         menuBarPaquetería.add(rutas);
 
+        jMenu3.setText("Reportes");
+
+        menuReporte1.setText("Reporte Rutas");
+        menuReporte1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReporte1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuReporte1);
+
+        menuReporte2.setText("Reporte Clientes");
+        menuReporte2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReporte2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuReporte2);
+
+        menuBarPaquetería.add(jMenu3);
+
         setJMenuBar(menuBarPaquetería);
 
         pack();
@@ -198,6 +230,24 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
         control1.show();
     }//GEN-LAST:event_controlRutasActionPerformed
 
+    private void menuReporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporte1ActionPerformed
+        MostrarReportes control1 = new MostrarReportes(this);
+        this.escritorio.add(control1);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = control1.getSize();
+        control1.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        control1.show();
+    }//GEN-LAST:event_menuReporte1ActionPerformed
+
+    private void menuReporte2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporte2ActionPerformed
+        MostrarReportes control1 = new MostrarReportes(this, 0);
+        this.escritorio.add(control1);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = control1.getSize();
+        control1.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        control1.show();
+    }//GEN-LAST:event_menuReporte2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu clientes;
@@ -207,8 +257,14 @@ public class PantallaPaqueteria extends javax.swing.JFrame {
     private javax.swing.JMenuItem entregaPaquete;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel fondoLabel;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar menuBarPaquetería;
     private javax.swing.JMenuItem menuControlPuntos;
+    private javax.swing.JMenuItem menuReporte1;
+    private javax.swing.JMenuItem menuReporte2;
     private javax.swing.JMenuItem modificacionRutas;
     private javax.swing.JMenuItem nuevaRuta;
     private javax.swing.JMenuItem nuevoPaquete;

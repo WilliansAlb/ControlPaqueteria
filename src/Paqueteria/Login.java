@@ -89,8 +89,6 @@ public class Login extends javax.swing.JFrame {
                 PantallaPaqueteria nueva = new PantallaPaqueteria(nuevo);
                 nueva.setVisible(true);
                 this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "NOMBRE DE USUARIO NO EXISTE");
             }
         }
     }//GEN-LAST:event_entradaUsuarioActionPerformed
